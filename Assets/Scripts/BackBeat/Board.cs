@@ -23,6 +23,16 @@ public class Board : MonoBehaviour {
 
 	private int matches = 0;
 
+	public bool autoClearOnMatch = false;
+
+	public int numOfBeatsToSkipAfterMatch = 0;
+
+	private int beatsToSkip = 0;
+
+	public bool rowMoveOnBeat = false;
+
+	public RowPickerData picker;
+
 	private void Awake()
 	{
 		if(instance == null)
@@ -71,6 +81,8 @@ public class Board : MonoBehaviour {
 		c.transform.localPosition = new Vector3((cellPrefab.Size.x * adjustedCriticalColumn) + transform.localPosition.x, transform.localPosition.y - (cellPrefab.Size.y * x), transform.localPosition.z);
 
 		c.matchReq = MatchRequirement;
+
+		c.instantClear = autoClearOnMatch;
 	}
 
 	private void PerformColumnAction(Action<int> a)
@@ -109,7 +121,14 @@ public class Board : MonoBehaviour {
 
 		if(ccPrefab != null)
 		{
-			Gizmos.color = Color.yellow;
+			if(autoClearOnMatch)
+			{
+				Gizmos.color = Color.cyan;
+			}
+			else
+			{
+				Gizmos.color = Color.yellow;
+			}
 
 			PerformRowAction(DrawWireCube);
 		}
@@ -144,13 +163,20 @@ public class Board : MonoBehaviour {
 	{
 		if(movableRowList.Count > 0 && mask.Equals (BeatType.OnBeat))
 		{
-			int y = UnityEngine.Random.Range(0, movableRowList.Count);
-
-			movableRowList[y].MoveForward(cellPrefab);
-
-			if(movableRowList[y].CellCount >= columns && movableRowList[y].Trans.localPosition.x >= columns * cellPrefab.Size.x)
+			if(beatsToSkip > 0)
 			{
-				movableRowList.Remove (movableRowList[y]);
+				beatsToSkip--;
+			}
+			else
+			{
+				int y = picker.PickRow<RowData> (rowList, movableRowList);
+					
+				movableRowList[y].MoveForward(cellPrefab);
+
+				if(movableRowList[y].CellCount >= columns && movableRowList[y].Trans.localPosition.x >= columns * cellPrefab.Size.x)
+				{
+					movableRowList.Remove (movableRowList[y]);
+				}
 			}
 		}
 	}
@@ -169,9 +195,11 @@ public class Board : MonoBehaviour {
 
 		PerformRowAction (CheckCriticalColumn);
 
-		if(matches >= MatchRequirement)
+		if(matches >= MatchRequirement || autoClearOnMatch)
 		{
 			PerformRowAction (ScoreMatches);
+
+			beatsToSkip = numOfBeatsToSkipAfterMatch;
 		}
 	}
 

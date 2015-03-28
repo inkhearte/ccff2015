@@ -32,8 +32,9 @@ public class RowData
 	private void AddCell(Cell c)
 	{
 		c.onClick.AddListener (MoveBackward);
-		c.onDrag.AddListener (Board.Instance.Match);
-		
+
+		c.clickOnBeat = Board.Instance.rowMoveOnBeat;
+
 		c.transform.parent = transform;
 		
 		c.transform.SetAsFirstSibling ();

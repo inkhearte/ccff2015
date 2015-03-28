@@ -13,7 +13,7 @@ SceneSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 4
+  serializedVersion: 6
   m_Fog: 0
   m_FogColor: {r: .5, g: .5, b: .5, a: 1}
   m_FogMode: 3
@@ -23,63 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: .211999997, g: .226999998, b: .259000003, a: 1}
   m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
   m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
-  m_AmbientSkyboxAmount: 1
-  m_AmbientProbe:
-    sh[ 0]: .11535719
-    sh[ 1]: -.0175340176
-    sh[ 2]: -.00924586132
-    sh[ 3]: .00531947613
-    sh[ 4]: -.000623662258
-    sh[ 5]: .00123385852
-    sh[ 6]: .0101003125
-    sh[ 7]: -.0163853653
-    sh[ 8]: .0199664086
-    sh[ 9]: .120476373
-    sh[10]: -.0203297511
-    sh[11]: -.0161329508
-    sh[12]: .0093109766
-    sh[13]: -.00134826056
-    sh[14]: .00269828457
-    sh[15]: .0118464287
-    sh[16]: -.0200803131
-    sh[17]: .0227536466
-    sh[18]: .106337428
-    sh[19]: -.0191645361
-    sh[20]: -.0212309174
-    sh[21]: .0124165071
-    sh[22]: -.00273934193
-    sh[23]: .00569035579
-    sh[24]: .00956857577
-    sh[25]: -.0188275874
-    sh[26]: .0164073817
-  m_AmbientProbeInGamma:
-    sh[ 0]: .346156538
-    sh[ 1]: -.031105103
-    sh[ 2]: -.00684926659
-    sh[ 3]: .00402922463
-    sh[ 4]: -.000620786566
-    sh[ 5]: .00139562087
-    sh[ 6]: .012517387
-    sh[ 7]: -.0156248705
-    sh[ 8]: .0269786958
-    sh[ 9]: .338324487
-    sh[10]: -.0277878195
-    sh[11]: -.0116119757
-    sh[12]: .00685411878
-    sh[13]: -.00114165712
-    sh[14]: .00259057246
-    sh[15]: .0133123975
-    sh[16]: -.0170289297
-    sh[17]: .0282872319
-    sh[18]: .295073926
-    sh[19]: -.0185605679
-    sh[20]: -.018948406
-    sh[21]: .0113113504
-    sh[22]: -.00229830621
-    sh[23]: .00535407104
-    sh[24]: .0110507831
-    sh[25]: -.0163607132
-    sh[26]: .0216944143
+  m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: .5
@@ -92,7 +36,6 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_GeneratedSkyboxReflection: {fileID: 0}
   m_Sun: {fileID: 0}
 --- !u!127 &3
 LevelGameManager:
@@ -100,17 +43,15 @@ LevelGameManager:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 4
-  m_LightProbesLegacy: {fileID: 0}
+  serializedVersion: 5
   m_GIWorkflowMode: 0
-  m_LightmapsModeLegacy: 1
   m_LightmapsMode: 1
-  m_UseDualLightmapsInForward: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
+    m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
@@ -118,28 +59,15 @@ LightmapSettings:
     serializedVersion: 3
     m_Resolution: 2
     m_BakeResolution: 40
-    m_LastUsedResolution: 0
     m_TextureWidth: 1024
     m_TextureHeight: 1024
-    m_BounceBoost: 1
-    m_BounceIntensity: 1
-    m_SkyLightColor: {r: .860000014, g: .930000007, b: 1, a: 1}
-    m_SkyLightIntensity: 0
-    m_Quality: 0
-    m_Bounces: 1
-    m_FinalGatherRays: 1000
-    m_FinalGatherContrastThreshold: .0500000007
-    m_FinalGatherGradientThreshold: 0
-    m_FinalGatherInterpolationPoints: 15
-    m_AOAmount: 0
     m_AOMaxDistance: 1
-    m_AOContrast: 1
-    m_LODSurfaceMappingDistance: 1
     m_Padding: 2
     m_CompAOExponent: 0
     m_LightmapParameters: {fileID: 0}
     m_TextureCompression: 1
-    m_LockAtlas: 0
+    m_FinalGather: 0
+    m_FinalGatherRayCount: 1024
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -198,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc6bf181cdb14aab9c6f511c928132c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatWindow: 5
+  beatWindow: 55
   beatMask: 0
   beatEvent:
     m_PersistentCalls:
@@ -350,10 +278,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapIndexDynamic: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 61bdce2c978cb2847a606bdce4a82a31, type: 2}
   m_SubsetIndices: 
@@ -474,10 +398,10 @@ Light:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1246465890}
   m_Enabled: 1
-  serializedVersion: 5
+  serializedVersion: 6
   m_Type: 1
   m_Color: {r: 1, g: .956862748, b: .839215696, a: 1}
-  m_Intensity: .5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -487,11 +411,8 @@ Light:
     m_Strength: 1
     m_Bias: .0500000007
     m_NormalBias: 0
-    m_Softness: 4
-    m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_ActuallyLightmapped: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -554,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beatValue: 5
-  beatScalar: 1
+  beatScalar: 2
   beatOffset: 0
   negativeBeatOffset: 0
   beatType: 2
@@ -610,6 +531,11 @@ MonoBehaviour:
   cellPrefab: {fileID: 11407364, guid: e2d564e69f4faa1409523323571ac587, type: 2}
   ccPrefab: {fileID: 11441298, guid: 4aafdbe862b1bf243a40360bdf503ce9, type: 2}
   MatchRequirement: 2
+  autoClearOnMatch: 1
+  numOfBeatsToSkipAfterMatch: 0
+  rowMoveOnBeat: 0
+  picker:
+    style: 1
 --- !u!4 &1416816663
 Transform:
   m_ObjectHideFlags: 0

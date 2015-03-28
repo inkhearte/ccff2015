@@ -13,6 +13,9 @@ public class CriticalColumnCell : MonoBehaviour {
 
 	private Dictionary<Cell, List<Cell>> matchDict;
 
+	[HideInInspector]
+	public bool instantClear = false;
+
 	private void Awake()
 	{
 		rb = gameObject.GetComponent<Rigidbody>();
@@ -86,20 +89,27 @@ public class CriticalColumnCell : MonoBehaviour {
 
 		if(l.Count >= matchReq)
 		{
-			for(int i = 0; i < l.Count; i++)
+			if(instantClear)
 			{
-				l[i].matched = true;
+				Board.Instance.Match ();
+			}
+			else
+			{
+				for(int i = 0; i < l.Count; i++)
+				{
+					l[i].matched = true;
 
-				if(l[i].ccCell.matchDict.ContainsKey (l[i]))
-				{
-					if(l.Count > l[i].ccCell.matchDict[l[i]].Count)
+					if(l[i].ccCell.matchDict.ContainsKey (l[i]))
 					{
-						l[i].ccCell.matchDict[l[i]] = l;
+						if(l.Count > l[i].ccCell.matchDict[l[i]].Count)
+						{
+							l[i].ccCell.matchDict[l[i]] = l;
+						}
 					}
-				}
-				else
-				{
-					l[i].ccCell.matchDict.Add (l[i], l);
+					else
+					{
+						l[i].ccCell.matchDict.Add (l[i], l);
+					}
 				}
 			}
 		}
@@ -107,7 +117,7 @@ public class CriticalColumnCell : MonoBehaviour {
 
 	private void Matches(Vector2 coord, ref List<Cell> matchList)
 	{
-		if(coord.y > 0 && coord.y < Board.Instance.RowList.Count)
+		if(coord.y >= 0 && coord.y < Board.Instance.RowList.Count)
 		{
 			RowData rd = Board.Instance.RowList[(int)coord.y];
 

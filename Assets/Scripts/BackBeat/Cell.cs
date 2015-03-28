@@ -46,14 +46,7 @@ public class Cell : MonoBehaviour {
 
 	public RendererStates states;
 
-	public float dragTime = 0.2f;
-
-	private float mouseDownTime = 0.0f;
-	
-	private bool dragging = false;
-
 	public UnityEvent onClick = new UnityEvent();
-	public UnityEvent onDrag = new UnityEvent();
 
 	[HideInInspector]
 	public CriticalColumnCell ccCell = null;
@@ -64,8 +57,13 @@ public class Cell : MonoBehaviour {
 
 	private BeatObserver beatObs;
 
+	private BeatType bMask;
+
 	[HideInInspector]
 	public bool matched = false;
+
+	[HideInInspector]
+	public bool clickOnBeat = false;
 
 	private void Awake()
 	{
@@ -77,7 +75,6 @@ public class Cell : MonoBehaviour {
 		anim = GetComponentInChildren<Animator>();
 
 		Randomize();
-
 	}
 
 	private void Randomize()
@@ -89,35 +86,12 @@ public class Cell : MonoBehaviour {
 		graphic.GetComponent<MeshRenderer>().material.color = defaultGraphicTD.color;
 	}
 
-	private void OnMousedown()
+	private void OnMouseDown()
 	{
-		mouseDownTime = 0.0f;
-	}
-
-	private void OnMouseDrag()
-	{
-		if(mouseDownTime < dragTime)
-		{
-			mouseDownTime += Time.deltaTime;
-		}
-		else
-		{
-			dragging = true;
-		}
-	}
-	
-	private void OnMouseUp()
-	{
-		if(!dragging)
+		if(!clickOnBeat || bMask.Equals(BeatType.OnBeat))
 		{
 			onClick.Invoke ();
 		}
-		else
-		{
-			onDrag.Invoke ();
-		}
-
-		dragging = false;
 	}
 
 	public bool Match(Cell otherCell)
@@ -127,6 +101,8 @@ public class Cell : MonoBehaviour {
 
 	public void DoOnBeat(BeatType mask)
 	{
+		bMask = mask;
+
 		if(matched && mask.Equals (BeatType.OnBeat))
 		{
 			anim.SetTrigger ("OnBeatTrigger");
@@ -136,7 +112,6 @@ public class Cell : MonoBehaviour {
 	public void Destroy()
 	{
 		onClick.RemoveAllListeners();
-		onDrag.RemoveAllListeners ();
 
 		beatObs.beatEvent.RemoveListener(DoOnBeat);
 
